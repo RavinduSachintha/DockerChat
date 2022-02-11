@@ -3,17 +3,31 @@ name: CI
 on:
   push:
     branches: [ master ]
+    
   pull_request:
     branches: [ master ]
+    
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Create env file
+        run: |
+          cat << EOF > ./signaling-server/app/.env
+          PORT=${{ secrets.HEROKU_SIG_SERV1_PORT }}
+          CLIENT_ORIGINS=${{ secrets.HEROKU_SIG_SERV1_CLIENT_ORIGINS }}
+          MONGO_USERNAME=${{ secrets.HEROKU_SIG_SERV1_MONGO_USERNAME }}
+          MONGO_PASSWORD=${{ secrets.HEROKU_SIG_SERV1_MONGO_PASSWORD }}
+          MONGO_CLUSTERNAME=${{ secrets.HEROKU_SIG_SERV1_MONGO_CLUSTERNAME }}
+          MONGO_DBNAME=${{ secrets.HEROKU_SIG_SERV1_MONGO_DBNAME }}
+          EOF
 
-      - name: build-push signaling server
+      - name: Build & push signaling server
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
