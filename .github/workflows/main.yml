@@ -2,20 +2,20 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
-    
+    branches: [master]
+
   pull_request:
-    branches: [ master ]
-    
+    branches: [master]
+
   workflow_dispatch:
 
 jobs:
   build-signaling-server:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Create env file
         run: |
           cat << EOF > ./signaling-server/app/.env
@@ -27,11 +27,13 @@ jobs:
           MONGO_DBNAME=${{ secrets.HEROKU_SIG_SERV1_MONGO_DBNAME }}
           EOF
 
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Build & Push docker containers
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME_SIGNALING_SERVER_1 }}
-          appdir: "signaling-server/app"
-          usedocker: true
-          docker_heroku_process_type: web
+          dockerfile_directory: ./signaling-server/app
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
