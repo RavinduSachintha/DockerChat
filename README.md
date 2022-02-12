@@ -1,2 +1,2 @@
 # DockerChat
-A chat application using docker, socket and python.
+A chat application using docker, socket.io and nodejs.

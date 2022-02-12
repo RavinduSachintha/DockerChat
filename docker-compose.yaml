@@ -1,8 +1,16 @@
 version: "3.9"
 
 services:
+
   signaling-server:
     build:
       context: ./signaling-server/app
+
+  nginx:
+    restart: always
+    build:
+      context: ./signaling-server/nginx
     ports:
-            - "8000:8000"
+      - "80:80"
+    depends_on:
+      - signaling-server
