@@ -3,9 +3,15 @@ name: CI
 on:
   push:
     branches: [master]
+    paths:
+      - "signaling-server/app/**"
+      - ".github/workflows/signaling_server.workflow.yml"
 
   pull_request:
     branches: [master]
+    paths:
+      - "signaling-server/app/**"
+      - ".github/workflows/signaling_server.workflow.yml"
 
   workflow_dispatch:
 
