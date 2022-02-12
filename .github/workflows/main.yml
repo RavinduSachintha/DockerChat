@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-signaling-server:
     runs-on: ubuntu-latest
     
     steps:
@@ -27,13 +27,11 @@ jobs:
           MONGO_DBNAME=${{ secrets.HEROKU_SIG_SERV1_MONGO_DBNAME }}
           EOF
 
-      - name: Build & push signaling server
-        uses: gonuit/heroku-docker-deploy@v1.3.3
+      - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME_SIGNALING_SERVER_1 }}
-          dockerfile_directory: "./signaling-server/app/"
-          dockerfile_name: Dockerfile
-          docker_options: "--no-cache"
-          process_type: web
+          appdir: "signaling-server/app"
+          usedocker: true
+          docker_heroku_process_type: web

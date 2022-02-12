@@ -1,4 +1,0 @@
-build:
-  docker:
-    signaling_server: signaling-server/app/Dockerfile
-    nginx_proxy: signaling-server/nginx/Dockerfile
