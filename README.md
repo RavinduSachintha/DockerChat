@@ -1,4 +1,4 @@
-# DockerChat [![CI](https://github.com/RavinduSachintha/DockerChat/actions/workflows/main.yml/badge.svg)](https://github.com/RavinduSachintha/DockerChat/actions/workflows/main.yml)
+# DockerChat [![CI](https://github.com/RavinduSachintha/DockerChat/actions/workflows/signaling_server.workflow.yml/badge.svg)](https://github.com/RavinduSachintha/DockerChat/actions/workflows/signaling_server.workflow.yml)
 
 A chat application using docker, socket.io and nodejs.
 
